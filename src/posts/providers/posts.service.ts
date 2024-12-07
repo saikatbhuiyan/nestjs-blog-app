@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable, Patch } from '@nestjs/common';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UsersService } from 'src/users/providers/users.service';
+import { PatchPostDto } from '../dtos/patch-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -20,5 +22,18 @@ export class PostsService {
         content: 'Test Content 2',
       },
     ];
+  }
+
+  @ApiOperation({
+    summary: 'Updates and existing blog post in the database.',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'You get a success 200 response if the post is updated successfully',
+  })
+  @Patch()
+  public updatePost(@Body() patchPostsDto: PatchPostDto) {
+    console.log(patchPostsDto);
   }
 }
