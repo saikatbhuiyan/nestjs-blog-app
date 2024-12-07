@@ -17,11 +17,20 @@ import { UsersService } from './providers/users.service';
 import { PatchUserDto } from './dtos/patch-user.dto';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+/**
+ * Controller class for '/users' API endpoint
+ */
 @Controller('users')
 @ApiTags('Users')
 export class UsersController {
+  /**
+   * Injects dependencies for the controller
+   */
   constructor(private readonly usersService: UsersService) {}
 
+  /**
+   *  Public method responsible for handling the GET request send to '/users' route
+   */
   @ApiOperation({
     summary: 'Fetches a list of registered users on the application.',
   })
@@ -51,12 +60,18 @@ export class UsersController {
     return this.usersService.findAll(getUserParamDto, limit, page);
   }
 
+  /**
+   *  Public method responsible for handling the POST request send to '/users' route
+   */
   @Post()
   public createUsers(@Body() createUserDto: CreateUserDto) {
     console.log(createUserDto instanceof CreateUserDto);
     return 'You sent a post request to users endpoint';
   }
 
+  /**
+   * Public method responsible for handling the PATCH request send to '/users' route
+   */
   @Patch()
   public patchUser(@Body() patchUserDto: PatchUserDto) {
     return patchUserDto;
