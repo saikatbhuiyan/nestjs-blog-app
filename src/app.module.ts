@@ -12,7 +12,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     PostsModule,
     AuthModule,
     TypeOrmModule.forRootAsync({
+      imports: [],
+      inject: [],
       useFactory: () => ({
+        entities: [],
         type: 'postgres',
         host: process.env.DATABASE_HOST,
         port: +process.env.DATABASE_PORT,
