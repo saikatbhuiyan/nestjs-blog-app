@@ -5,6 +5,10 @@ import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+/**
+ * Importing Entities
+ * */
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -15,7 +19,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       imports: [],
       inject: [],
       useFactory: () => ({
-        entities: [],
+        entities: [User],
         type: 'postgres',
         host: process.env.DATABASE_HOST,
         port: +process.env.DATABASE_PORT,

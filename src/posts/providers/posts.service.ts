@@ -7,8 +7,8 @@ import { PatchPostDto } from '../dtos/patch-post.dto';
 export class PostsService {
   constructor(private readonly usersService: UsersService) {}
 
-  public findAll(userId: string) {
-    const user = this.usersService.findOneById(userId);
+  public findAll(userId: number) {
+    const user = this.usersService.findOneById({ id: userId });
 
     return [
       {

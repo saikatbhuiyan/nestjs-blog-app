@@ -51,22 +51,35 @@ export class UsersController {
     status: 200,
     description: 'Users fetched successfully based on the query',
   })
-  @Get('/:id?')
+  @Get()
   public getUsers(
-    @Param() getUserParamDto: GetUsersParamDto,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
   ) {
-    return this.usersService.findAll(getUserParamDto, limit, page);
+    return this.usersService.findAll(limit, page);
+  }
+
+  /**
+   *  Public method responsible for handling the GET request send to '/users' route
+   */
+  @ApiOperation({
+    summary: 'Fetches aregistered user on the application.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'User fetched successfully based on the query',
+  })
+  @Get('/:id?')
+  public getUser(@Param() getUserParamDto: GetUsersParamDto) {
+    return this.usersService.findOneById(getUserParamDto);
   }
 
   /**
    *  Public method responsible for handling the POST request send to '/users' route
    */
   @Post()
-  public createUsers(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto instanceof CreateUserDto);
-    return 'You sent a post request to users endpoint';
+  public createUser(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.createUser(createUserDto);
   }
 
   /**
