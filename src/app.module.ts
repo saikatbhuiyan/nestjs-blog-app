@@ -9,6 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
  * Importing Entities
  * */
 import { User } from './users/entities/user.entity';
+import { MetaOptionsModule } from './meta-options/meta-options.module';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { User } from './users/entities/user.entity';
         logging: true,
       }),
     }),
+    MetaOptionsModule,
+    TagsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

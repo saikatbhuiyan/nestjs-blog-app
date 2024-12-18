@@ -12,7 +12,7 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
-import { PostType } from '../enums/post-type.enum';
+import { postType } from '../enums/post-type.enum';
 import { Type } from 'class-transformer';
 import { CreatePostMetaOptionsDto } from './create-post-meta-options.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -25,12 +25,12 @@ export class CreatePostDto {
   title: string;
 
   @ApiProperty({
-    enum: PostType,
+    enum: postType,
     description: "Possible values  'post', 'page', 'story', 'series'",
   })
-  @IsEnum(PostType)
+  @IsEnum(postType)
   @IsNotEmpty()
-  postType: PostType;
+  postType: postType;
 
   @ApiProperty({
     description: "For example 'my-url'",
