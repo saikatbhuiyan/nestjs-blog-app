@@ -2,8 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as dotenv from 'dotenv';
-dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +12,8 @@ async function bootstrap() {
       transform: true, // transforms the incoming request to an instance of the DTO class after validation
     }),
   );
+
+  console.log('Creating:... ', process.env.DATABASE_HOST);
 
   // Create the swagger configuration
   const config = new DocumentBuilder()
