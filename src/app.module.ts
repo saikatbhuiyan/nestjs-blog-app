@@ -5,16 +5,9 @@ import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-/**
- * Importing Entities
- * */
-import { User } from './users/entities/user.entity';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
 import { TagsModule } from './tags/tags.module';
 
-import { Tag } from './tags/entities/tag.entity';
-import { Post } from './posts/entities/post.entity';
-import { MetaOption } from './meta-options/entities/meta-option.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
