@@ -1,9 +1,13 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
-import { GetUsersParamDto } from '../dtos/get-users-param.dto';
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { User } from '../entities/user.entity';
+import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +17,11 @@ export class UsersService {
      * */
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+
+    /**
+     * Inject findOneUserByEmailProvider
+     */
+    private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
@@ -45,10 +54,35 @@ export class UsersService {
   }
 
   /**
-   * Find a user by ID
+   * Public method used to find one user using the ID of the user
    */
-  public async findOneById(getUserParamDto: GetUsersParamDto): Promise<User> {
-    const { id } = getUserParamDto;
-    return await this.usersRepository.findOne({ where: { id } });
+  public async findOneById(id: number) {
+    let user = undefined;
+
+    try {
+      user = await this.usersRepository.findOneBy({
+        id,
+      });
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later',
+        {
+          description: 'Error connecting to the the datbase',
+        },
+      );
+    }
+
+    /**
+     * Handle the user does not exist
+     */
+    if (!user) {
+      throw new BadRequestException('The user id does not exist');
+    }
+
+    return user;
+  }
+
+  public async findOneByEmail(email: string) {
+    return await this.findOneUserByEmailProvider.findOneByEmail(email);
   }
 }
